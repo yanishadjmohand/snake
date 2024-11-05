@@ -1,3 +1,5 @@
+import pygame as pg
+
 # les coordonnées de rectangle que l'on dessine
 x = 100 # coordonnée x (colonnes) en pixels
 y = 100 # coordonnée y (lignes) en pixels
