@@ -5,6 +5,7 @@ avec la touche 'q', ou avec la souris en fermant la fenêtre
 
 from random import randint
 import pygame as pg
+from tools import tracer_serpent
 
 pg.init()
 screen = pg.display.set_mode((600, 600))
@@ -57,13 +58,14 @@ while running:
        #         pg.draw.rect(screen, (255,255,255), rect)
 
     
-    for z in snake:
-        x=z[0]*20
-        y=z[1]*20
-        width=20
-        height=20
-        rect=pg.Rect(x, y, width, height)
-        pg.draw.rect(screen, (255,0,0), rect)
+#    for z in snake:
+ #       x=z[0]*20
+  #      y=z[1]*20
+   #     width=20
+    #    height=20
+     #   rect=pg.Rect(x, y, width, height)
+      #  pg.draw.rect(screen, (255,0,0), rect)
+    tracer_serpent(snake):
         
     x=pomme[0]*20
     y=pomme[1]*20
