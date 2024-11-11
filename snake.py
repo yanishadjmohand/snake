@@ -65,7 +65,7 @@ while running:
     #    height=20
      #   rect=pg.Rect(x, y, width, height)
       #  pg.draw.rect(screen, (255,0,0), rect)
-    tracer_serpent(snake):
+    tracer_serpent(screen,snake)
         
     x=pomme[0]*20
     y=pomme[1]*20
