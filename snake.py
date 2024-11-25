@@ -6,16 +6,20 @@ avec la touche 'q', ou avec la souris en fermant la fenêtre
 from random import randint
 import pygame as pg
 from tools import tracer_serpent
+from collections import deque
+from collections import namedtuple
+
 
 pg.init()
 screen = pg.display.set_mode((600, 600))
 clock = pg.time.Clock()
 # on rajoute une condition à la boucle: si on la passe à False le programme s'arrête
-snake = [(10,15),(11,15),(12,15)]
-direction = (1,0)
+Cell=namedtuple('Cell',['x','y'])
+snake = deque([Cell(x=10,y=15),Cell(x=11,y=15),Cell(x=12,y=15)])
+direction = Cell(x=1,y=0)
 running = True
 
-pomme=(5,5)
+pomme=Cell(x=5,y=5)
 
 while running:
 
@@ -33,14 +37,14 @@ while running:
             # si la touche est "Q" on veut quitter le programme
             if event.key == pg.K_q:
                 running = False
-            elif event.key == pg.K_RIGHT and direction != (-1,0):
-                direction = (1,0)
-            elif event.key == pg.K_LEFT and direction != (1,0):
-                direction = (-1,0)
-            elif event.key == pg.K_UP and direction != (0,1):
-                direction = (0,-1)
-            elif event.key == pg.K_DOWN and direction != (0,-1):
-                direction = (0,1)
+            elif event.key == pg.K_RIGHT and direction != Cell(x=-1,y=0):
+                direction = Cell(x=1,y=0)
+            elif event.key == pg.K_LEFT and direction != Cell(x=1,y=0):
+                direction = Cell(x=-1,y=0)
+            elif event.key == pg.K_UP and direction != Cell(x=0,y=1):
+                direction = Cell(x=0,y=-1)
+            elif event.key == pg.K_DOWN and direction != Cell(x=0,y=-1):
+                direction =Cell(x=0,y=1)
 
     # xxx ici c'est discutable, car si on tape 'q'
     # on va quand même changer de couleur avant de sortir...
@@ -67,22 +71,23 @@ while running:
       #  pg.draw.rect(screen, (255,0,0), rect)
     tracer_serpent(screen,snake)
         
-    x=pomme[0]*20
-    y=pomme[1]*20
+    x=pomme.x*20
+    y=pomme.y*20
     width=20
     height=20
     rect=pg.Rect(x, y, width, height)
     pg.draw.rect(screen, (0,255,0), rect)
 
-    if (snake[-1][0]+direction[0],snake[-1][1]+direction[1])==pomme : 
-        snake=snake+[(snake[-1][0]+direction[0],snake[-1][1]+direction[1])]
-        pomme=(randint(0,29),randint(0,29))
+    if Cell(x=snake[-1].x+direction.x,y=snake[-1].y+direction.y)==pomme : 
+        snake.append(Cell(x=snake[-1].x+direction.x,y=snake[-1].y+direction.y))
+        pomme=Cell(x=randint(0,29),y=randint(0,29))
         print (pomme)
     else : 
-        snake=snake[1:]+[(snake[-1][0]+direction[0],snake[-1][1]+direction[1])]
+        snake.append(Cell(x=snake[-1].x+direction.x,y=snake[-1].y+direction.y))
+        snake.popleft()
 
     for i in range(len(snake)):
-        snake[i]=(snake[i][0]%30,snake[i][1]%30)
+        snake[i]=Cell(x=snake[i].x%30,y=snake[i].y%30)
 
     
     
